@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>মাওয়া নাফি টেলিকম</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a73e8">
+
+    <style>
+        :root {
+            --bg: #0d1b4b;
+            --blue: #1a73e8;
+            --card: #16245a;
+            --white: #ffffff;
+        }
+
+        body { font-family: sans-serif; background: var(--bg); color: var(--white); margin: 0; padding: 0; }
+        .header { background: var(--blue); padding: 30px; text-align: center; border-radius: 0 0 20px 20px; }
+        .container { padding: 20px; max-width: 600px; margin: auto; }
+        .card { background: var(--card); padding: 15px; margin-bottom: 15px; border-radius: 10px; border-left: 5px solid var(--blue); }
+        .btn { display: block; width: 100%; padding: 12px; text-align: center; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 10px; cursor: pointer; border: none; }
+        .btn-call { background: #28a745; color: white; }
+        .btn-admin { background: #6c757d; color: white; margin-top: 30px; font-size: 0.8rem; }
+        
+        /* Admin Section Styling */
+        #admin-panel, #login-section { display: none; background: #f8f9fa; color: #333; padding: 20px; border-radius: 15px; margin-top: 20px; }
+        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        .admin-header { color: var(--blue); border-bottom: 2px solid var(--blue); margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div id="main-site">
+        <header class="header">
+            <h1>মাওয়া নাফি টেলিকম</h1>
+            <p>মোবাইল সার্ভিসিং ও টেলিকম সেন্টার</p>
+        </header>
+
+        <div class="container">
+            <div class="card">
+                <h3>🛠 সার্ভিসিং</h3>
+                <p>সব ধরণের স্মার্টফোন যত্ন সহকারে মেরামত করা হয়।</p>
+            </div>
+            <div class="card">
+                <h3>📲 রিচার্জ ও অফার</h3>
+                <p>সকল সিমের ড্রাইভ প্যাক ও রিচার্জ উপলব্ধ।</p>
+            </div>
+            
+            <a href="tel:+8801700000000" class="btn btn-call">📞 যোগাযোগ করুন</a>
+            
+            <button onclick="showLogin()" class="btn btn-admin">Admin Login</button>
+        </div>
+    </div>
+
+    <div id="login-section" class="container">
+        <h2 class="admin-header">সাব-এডমিন লগইন</h2>
+        <input type="text" id="username" placeholder="ইউজারনেম">
+        <input type="password" id="password" placeholder="পাসওয়ার্ড">
+        <button onclick="login()" class="btn btn-call">লগইন</button>
+        <button onclick="hideAdmin()" class="btn btn-admin">ফিরে যান</button>
+    </div>
+
+    <div id="admin-panel" class="container">
+        <h2 class="admin-header">ড্যাশবোর্ড (Sub-Admin)</h2>
+        <p>স্বাগতম, <b>নাফি টেলিকম</b> অ্যাডমিন প্যানেলে।</p>
+        <div style="background: #e9ecef; padding: 10px; border-radius: 5px;">
+            <p>✅ আজকের কাস্টমার: ০</p>
+            <p>✅ মোট সার্ভিসিং: ০</p>
+        </div>
+        <button onclick="logout()" class="btn btn-admin" style="background: red;">লগআউট</button>
+    </div>
+
+    <script>
+        // PWA Service Worker Register
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+
+        // Login Logic
+        function showLogin() {
+            document.getElementById('main-site').style.display = 'none';
+            document.getElementById('login-section').style.display = 'block';
+        }
+
+        function hideAdmin() {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('main-site').style.display = 'block';
+        }
+
+        function login() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            if(user === 'subadmin' && pass === 'nafi123') {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+            } else {
+                alert('ভুল ইউজারনেম বা পাসওয়ার্ড!');
+            }
+        }
+
+        function logout() {
+            document.getElementById('admin-panel').style.display = 'none';
+            document.getElementById('main-site').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
